@@ -1,0 +1,17 @@
+{
+  "login" : {
+    "loginTitle": "用户登录",
+    "noAccount": "没有账号？"
+  },
+  "loginForm" : {
+    "inputName": "请输入用户名称",
+    "inputPasswd": "请输入用户密码",
+    "inputVerification": "请输入右方验证码",
+    "btnLogin": "登录"
+  },
+  "message" : {
+    "messageName": "请输入用户名称",
+    "messagePasswd": "请输入用户密码",
+    "messageCode": "请输入右方验证码"
+  }
+}
