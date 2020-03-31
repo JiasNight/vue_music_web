@@ -8,10 +8,8 @@ import TopMusic from '../components/TopMusic.vue'
 import TopSinger from '../components/TopSinger.vue'
 import TopSheet from '../components/TopSheet.vue'
 import MyMusic from '../components/MyMusic.vue'
-import Audio from '../components/AudioPlayer.vue'
 
 Vue.use(VueRouter)
-Vue.component(Audio)
 
 const routes = [
   {
@@ -56,11 +54,6 @@ const routes = [
     path: '/register',
     name: 'register',
     component: Register
-  },
-  {
-    path: '/audio',
-    name: 'audio',
-    component: Audio
   }
 ]
 

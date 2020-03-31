@@ -4,24 +4,40 @@
       <div class="audio-avatar">
         <img :src="musicInfo.img" :alt="musicInfo.name" :class="imgClass">
       </div>
+      <!-- 歌曲当前时间 -->
       <span class="audio-time">{{currentTime}}</span>
-      <!-- <el-slider class="audio-slider" v-model="percentage_value"></el-slider> -->
+      <!-- 歌曲进度条 -->
       <el-slider class="audio-slider" v-model="percentage_value" @change="onProgressBarChange(percentage_value)" :show-tooltip="showTooltip"></el-slider>
+      <!-- 歌曲总时间 -->
       <span class="audio-allTime">{{totalTime}}</span>
+      <!-- 上一曲按钮 -->
       <el-button class="audio-prev" icon="iconfont icon-previous" @click="musicPrev" size="mini" circle></el-button>
+      <!-- 播放暂停按钮 -->
       <el-button class="audio-stop" :icon="isPlayIcon" @click.native="musicPlayOrStop" size="medium" circle autofocus></el-button>
+      <!-- 下一曲按钮 -->
       <el-button class="audio-next" icon="iconfont icon-next" @click="musicNext" size="mini" circle></el-button>
+      <!-- 播放列表按钮 -->
       <el-button class="audio-list" :icon="isMusicListsIcon" @click="isMusicLists" size="mini" circle></el-button>
-      <el-button class="audio-loop" :icon="isModeListIcon" @click="changeMusicMode" size="mini" circle></el-button>
+      <!-- 改变播放模式按钮 -->
+      <el-tooltip effect="dark" :content="playModeString" placement="top-start" transition="el-fade-in-linear">
+        <el-button class="audio-loop" :icon="isModeListIcon" @click="changeMusicMode" size="mini" circle></el-button>
+      </el-tooltip>
+      <!-- 音量按钮 -->
       <el-button class="audio-volume" :icon="volumeIcon" size="mini" circle></el-button>
+      <!-- 音量滑块 -->
       <el-slider class="audio-volume-slider" v-model="volume" @change="volumeChange"></el-slider>
       <div class="audio-listInfos" v-show="musicListShow">
-        <div class="infos-list">
-          <table>
+        <!-- <h4>播放列表<i :class="isModeListIcon"></i></h4> -->
+        <!-- <div class="infos-list"> -->
+        <table>
+          <thead>
             <th>播放列表<i :class="isModeListIcon"></i></th>
+          </thead>
+          <tbody>
             <tr v-for="(item, index) in musicLists" :key="index"><span @click="changeMusicPlay(item.id)">{{ item.name }}</span></tr>
-          </table>
-        </div>
+          </tbody>
+        </table>
+        <!-- </div> -->
       </div>
     </div>
     <span :class="audioLyric">{{musicInfo.name}}</span>
@@ -30,6 +46,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   data () {
     return {
@@ -45,110 +63,42 @@ export default {
       isMusicListsIcon: 'iconfont icon-liebiao',
       isModeListIcon: 'iconfont icon-liebiaoshunxu',
       playMode: 1, // 播放状态，默认为1顺序播放，2为随机播放，3为单曲循环
+      playModeString: '顺序播放',
+      currentIndex: null,
       percentage_value: 0,
       currentTime: '00:00', // 当前播放时间
       totalTime: '00:00', // 总播放时间
-      volume: 25, // 音量进度
-      volumeIcon: 'iconfont icon-yinliang',
-      musicInfo: {
-        // id: 1,
-        // name: '绅士',
-        // author: '薛之谦',
-        // type: '流行',
-        // sheet: '又是那一年',
-        // img: require('../assets/images/s3.png'),
-        // src: require('../assets/audio/薛之谦 - 绅士.mp3'),
-        // lyric: ''
-      },
-      musicLists: [
-        {
-          id: 1,
-          name: '绅士',
-          author: '薛之谦',
-          type: '流行',
-          sheet: '又是那一年',
-          img: require('../assets/images/s3.png'),
-          src: require('../assets/audio/薛之谦 - 绅士.mp3'),
-          lyric: ''
-        },
-        {
-          id: 2,
-          name: '你还要我怎样',
-          author: '薛之谦',
-          type: '流行',
-          sheet: '又是那一年',
-          img: require('../assets/images/s3.png'),
-          src: require('../assets/audio/薛之谦 - 你还要我怎样.mp3'),
-          lyric: ''
-        },
-        {
-          id: 3,
-          name: '薛之谦-演员',
-          author: '薛之谦',
-          type: '流行',
-          sheet: '又是那一年',
-          img: require('../assets/images/s3.png'),
-          src: require('../assets/audio/薛之谦 - 演员.mp3'),
-          lyric: ''
-        },
-        {
-          id: 4,
-          name: '薛之谦-刚刚',
-          author: '薛之谦',
-          type: '流行',
-          sheet: '又是那一年',
-          img: require('../assets/images/s3.png'),
-          src: require('../assets/audio/薛之谦 - 绅士.mp3'),
-          lyric: ''
-        },
-        {
-          id: 5,
-          name: '薛之谦-其实',
-          author: '薛之谦',
-          type: '流行',
-          sheet: '又是那一年',
-          img: require('../assets/images/s3.png'),
-          src: require('../assets/audio/薛之谦 - 绅士.mp3'),
-          lyric: ''
-        },
-        {
-          id: 6,
-          name: '薛之谦-好像在哪见过你',
-          author: '薛之谦',
-          type: '流行',
-          sheet: '又是那一年',
-          img: require('../assets/images/s3.png'),
-          src: require('../assets/audio/薛之谦 - 绅士.mp3'),
-          lyric: ''
-        },
-        {
-          id: 7,
-          name: '薛之谦-丑八怪',
-          author: '薛之谦',
-          type: '流行',
-          sheet: '又是那一年',
-          img: require('../assets/images/s3.png'),
-          src: require('../assets/audio/薛之谦 - 绅士.mp3'),
-          lyric: ''
-        },
-        {
-          id: 8,
-          name: '賭神',
-          author: '賭神',
-          type: '流行',
-          sheet: '又是那一年',
-          img: require('../assets/images/s3.png'),
-          src: require('../assets/audio/賭神 - 卢冠廷.mp3'),
-          lyric: ''
-        }
-      ]
+      volume: 10, // 音量进度
+      volumeIcon: 'iconfont icon-yinliang'
+      // musicInfo: {},
+      // musicLists: []
     }
+  },
+  computed: {
+    ...mapGetters([
+      'musicInfo',
+      'musicLists'
+    ])
   },
   mounted () {
     // 初始化加载音乐到音乐列表中
     this.initMusicLists()
   },
   methods: {
+    // ...mapActions([
+    //   'initMusicLists'
+    // ]),
+    // 初始化加载音乐信息
+    initMusicLists () {
+      this.$axios.get('testMusic.json').then(res => {
+        this.$store.dispatch('addMusicLists', res.data)
+        // console.log('执行了')
+        // return res.data
+      }).catch(error => {
+        console.log('获取音乐列表错误！' + error)
+        return error
+      })
+    },
     error () {
       this.audioReady = true
       console.log('发生错误')
@@ -156,7 +106,7 @@ export default {
     end () {
       if (this.playMode === 1) {
         console.log('顺序播放')
-        console.log(this.musicInfo.currentIndex)
+        // console.log(this.currentIndex)
       } else if (this.playMode === 2) {
         console.log('随机播放')
       } else if (this.playMode === 0) {
@@ -170,41 +120,12 @@ export default {
       setTimeout(this.onPlay(), 2000)
     },
     getDuration () {
-      // let time = this.$refs.audio.duration
-      // let minute = Math.floor(time / 60)
-      // if (minute < 9 && minute > 0) {
-      //   minute = '0' + minute
-      // }
-      // let second = Math.round(time % 60)
-      // this.totalTime = minute + ':' + second
-      // this.audioReady = true
       // 歌曲全部时长
       this.totalTime = this.TimeFormat(this.$refs.audio.duration)
     },
     updateTime (e) {
       // 当前时间
       this.currentTime = this.TimeFormat(e.target.currentTime)
-      // let time = Math.round(e.target.currentTime)
-      // this.percentage_value = Math.round((time / this.$refs.audio.duration) * 100)
-      // if (time <= 9 && time >= 0) {
-      //   this.currentTime = '00:0' + time
-      // } else if (time > 9 && time < 60) {
-      //   this.currentTime = '00:' + time
-      // } else if (time === 60) {
-      //   this.currentTime = '01:00'
-      // } else if (time > 60 && time < 70) {
-      //   this.currentTime = '01:0' + Math.round(time % 60)
-      // } else {
-      //   let minute = Math.floor(time / 60)
-      //   if (minute < 9 && minute > 0) {
-      //     minute = '0' + minute
-      //   }
-      //   let second = Math.round(time % 60)
-      //   if (second <= 9 && second >= 0) {
-      //     second = '0' + second
-      //   }
-      //   this.currentTime = minute + ':' + second
-      // }
     },
     // 用于将时间戳转换成所需时间格式
     TimeFormat (timeStamp) {
@@ -221,6 +142,7 @@ export default {
     },
     // 播放
     onPlay () {
+      this.$refs.audio.volume = this.volume / 100
       this.imgClass = 'avatar-img'
       this.isPlayIcon = 'iconfont icon-pause'
       this.playing = true
@@ -246,48 +168,59 @@ export default {
     },
     // 列表改变歌曲播放
     changeMusicPlay (id) {
-      this.musicLists.forEach(item => {
+      let info = this.$store.state.currentMusicInfo
+      let musicList = this.$store.state.currentMusicLists
+      musicList.forEach(item => {
         if (id === item.id) {
-          this.musicInfo = item
+          info = item
+          this.$store.commit('setMusicInfo', info)
         }
         setTimeout(this.onPlay(), 500)
       })
     },
-    // 初始化加载音乐信息
-    initMusicLists () {
-      this.musicInfo = this.musicLists[0]
-    },
     // 上一曲
     musicPrev () {
-      let info = this.musicInfo
-      let array = this.musicLists
-      let arrLen = this.musicLists.length
+      let info = this.$store.state.currentMusicInfo
+      let array = this.$store.state.currentMusicLists
+      let arrLen = this.$store.state.currentMusicLists.length
       let currentIndex = null
-      array.forEach(function (item, index) {
-        if (info.id === item.id) {
-          currentIndex = index
-        }
-      })
-      currentIndex = currentIndex === 0 ? (arrLen - 1) : currentIndex - 1
-      info = array[currentIndex]
-      this.musicInfo = info
-      this.onPlay()
+      if (this.playMode === 1) {
+        array.forEach(function (item, index) {
+          if (info.id === item.id) {
+            currentIndex = index
+          }
+        })
+        currentIndex = currentIndex === 0 ? (arrLen - 1) : currentIndex - 1
+        info = array[currentIndex]
+        this.$store.commit('setMusicInfo', info)
+      } else if (this.playMode === 2) {
+        // 随机播放上一曲
+        currentIndex = Math.round(Math.random() * (arrLen - 1))
+        info = array[currentIndex]
+        this.$store.commit('setMusicInfo', info)
+      }
     },
     // 下一曲
     musicNext () {
-      let info = this.musicInfo
-      let array = this.musicLists
-      let arrLen = this.musicLists.length
+      let info = this.$store.state.currentMusicInfo
+      let array = this.$store.state.currentMusicLists
+      let arrLen = this.$store.state.currentMusicLists.length
       let currentIndex = null
-      array.forEach(function (item, index) {
-        if (info.id === item.id) {
-          currentIndex = index
-        }
-      })
-      currentIndex = currentIndex === (arrLen - 1) ? (currentIndex = 0) : currentIndex + 1
-      info = array[currentIndex]
-      this.musicInfo = info
-      this.onPlay()
+      if (this.playMode === 1) {
+        array.forEach(function (item, index) {
+          if (info.id === item.id) {
+            currentIndex = index
+          }
+        })
+        currentIndex = currentIndex === (arrLen - 1) ? (currentIndex = 0) : currentIndex + 1
+        info = array[currentIndex]
+        this.$store.commit('setMusicInfo', info)
+      } else if (this.playMode === 2) {
+        // 随机播放下一曲
+        currentIndex = Math.round(Math.random() * (arrLen - 1))
+        info = array[currentIndex]
+        this.$store.commit('setMusicInfo', info)
+      }
     },
     // 是否显示播放列表按钮点击事件
     isMusicLists () {
@@ -304,10 +237,13 @@ export default {
       this.playMode += 1
       if (this.playMode === 1) {
         this.isModeListIcon = 'iconfont icon-liebiaoshunxu'
+        this.playModeString = '顺序播放'
       } else if (this.playMode === 2) {
         this.isModeListIcon = 'iconfont icon-suiji'
+        this.playModeString = '随机播放'
       } else if (this.playMode === 3) {
         this.isModeListIcon = 'iconfont icon-danquxunhuan'
+        this.playModeString = '单曲循环'
         this.playMode = 0
       }
     },
@@ -345,12 +281,13 @@ export default {
     }
   },
   watch: {
-    musicInfo (newSong, oldSong) {
-      if (newSong.id !== oldSong.id) {
-        this.$nextTick(() => {
-          // this.$refs.audio.play()
-        })
-      }
+    musicInfo (newSong) {
+      // console.log(newSong.id)
+      // let oldSong = this.$store.state.currentMusicInfo
+      // if (newSong.id !== oldSong.id) {
+      //   console.log('改变了')
+      //   setTimeout(this.onPlay(), 500)
+      // }
     }
   }
 }
@@ -451,7 +388,7 @@ export default {
 }
 
 .audio-listInfos{
-  width: 150px;
+  width: 140px;
   height: 180px;
   background-color: rgba(41, 42, 45, 0.85);
   position: absolute;
@@ -459,54 +396,61 @@ export default {
   right: 40px;
   overflow-x: hidden;
   overflow-y: scroll;
-  scrollbar-width: none; /*兼容火狐*/
-  -ms-overflow-style: none; /*兼容IE*/
+  scrollbar-width: none;/* 兼容火狐*/
+  -ms-overflow-style: none;/* 兼容IE*/
   border-radius: 5px;
   display: inline-block;
 }
 
 /* 滑块隐藏，兼容chrome和safari */
-  .audio-listInfos::-webkit-scrollbar{
-    display: none;
-  }
-
-.infos-list{
-  width: 100%;
-  height: 100%;
+.audio-listInfos::-webkit-scrollbar{
+  display: none;
 }
 
-.infos-list table{
+/* .infos-list{
   width: 100%;
   height: 100%;
+} */
+
+.audio-listInfos table{
+  width: 100%;
+  height: 180px;
+}
+
+.audio-listInfos table thead{
   table-layout:fixed;
-  border-collapse:collapse;
 }
 
-.infos-list table th{
+.audio-listInfos table thead th{
   font-size: 15px;
   font-weight: inherit;
   text-align: center;
 }
 
-.infos-list table tr{
+.audio-listInfos table tbody{
+  width: 100%;
+  max-height: 50px;
+}
+
+.audio-listInfos table tbody tr{
   height: 25px;
   width: 100%;
   cursor: pointer;
 }
 
-.infos-list table tr:nth-child(even){
+.audio-listInfos table tbody tr:nth-child(even){
   background:rgba(41, 42, 45, 0.3)
 }
 
-.infos-list table tr:nth-child(odd){
+.audio-listInfos table tbody tr:nth-child(odd){
   background:rgba(0.14, 0.15, 0.16, 0.2)
 }
 
-.infos-list table tr:hover{
+.audio-listInfos table tbody tr:hover{
   background-color: rgba(119, 116, 116, 0.3);
 }
 
-.infos-list table tr span{
+.audio-listInfos table tbody tr span{
   width: 86%;
   height: 100%;
   display: inline-block;
@@ -518,7 +462,7 @@ export default {
 }
 
 /* 播放列表歌曲横幅移动 */
-.infos-list table tr span:hover{
+.audio-listInfos table tbody tr span:hover{
   color: aliceblue;
   animation: songNameMove 5s infinite linear;
 }
@@ -555,7 +499,7 @@ export default {
 /* 播放列表移动 */
 @keyframes songNameMove {
   0%{
-    -webkit-transform: translateX(10px);
+    -webkit-transform: translateX(80px);
   }
   100%{
     -webkit-transform: translateX(-80px);
@@ -564,7 +508,7 @@ export default {
 
 @-webkit-keyframes songNameMove {
   0%{
-    -webkit-transform: translateX(10px);
+    -webkit-transform: translateX(80px);
   }
   100%{
     -webkit-transform: translateX(-80px);
@@ -573,7 +517,7 @@ export default {
 
 @-moz-keyframes songNameMove {
   0%{
-    -webkit-transform: translateX(10px);
+    -webkit-transform: translateX(80px);
   }
   100%{
     -webkit-transform: translateX(-80px);

@@ -1,7 +1,11 @@
 import Vue from 'vue'
+import store from './store/audio'
 import App from './App.vue'
+// 导入路由
 import router from './router'
+// 导入elementui和css样式
 import './plugins/element.js'
+import 'element-ui/lib/theme-chalk/index.css'
 // 导入全局样式表
 import './assets/css/global.css'
 // 导入字体图标库
@@ -28,5 +32,6 @@ Vue.prototype.$axios = axios
 new Vue({
   router,
   i18n,
+  store,
   render: h => h(App)
 }).$mount('#app')

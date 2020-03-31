@@ -1,0 +1,104 @@
+{"data":
+  [
+    {
+      "id": 1,
+      "name": "薛之谦-演员",
+      "author": "薛之谦",
+      "type": "伤感",
+      "sheet": "再见大家",
+      "img": "images/xuezhiqian.png",
+      "src": "audio/薛之谦 - 演员.mp3",
+      "lyric": ""
+    },
+    {
+      "id": 2,
+      "name": "K.D - 晚安-K.D（Cover：颜人中）",
+      "author": "K.D",
+      "type": "流行",
+      "sheet": "晚安",
+      "img": "images/K.D.png",
+      "src": "audio/K.D - 晚安-K.D（Cover：颜人中）.mp3",
+      "lyric": ""
+    },
+    {
+      "id": 3,
+      "name": "Beautiful In White",
+      "author": "Westlife",
+      "type": "流行",
+      "sheet": "又是那一年",
+      "img": "images/westlife.png",
+      "src": "audio/Westlife - Beautiful In White (Demo).mp3",
+      "lyric": ""
+    },
+    {
+      "id": 4,
+      "name": "霍尊 - 天行九歌",
+      "author": "霍尊",
+      "type": "流行",
+      "sheet": "天行九歌",
+      "img": "images/tian.png",
+      "src": "audio/霍尊 - 天行九歌.mp3",
+      "lyric": ""
+    },
+    {
+      "id": 5,
+      "name": "薛之谦 - 丑八怪",
+      "author": "薛之谦",
+      "type": "流行",
+      "sheet": "美",
+      "img": "images/xuezhiqian3.png",
+      "src": "audio/薛之谦 - 丑八怪.mp3",
+      "lyric": ""
+    },
+    {
+      "id": 6,
+      "name": "你还要我怎样",
+      "author": "薛之谦",
+      "type": "流行",
+      "sheet": "又是那一年",
+      "img": "images/xuezhiqian4.png",
+      "src": "audio/薛之谦 - 你还要我怎样.mp3",
+      "lyric": ""
+    },
+    {
+      "id": 7,
+      "name": "逃跑计划 - 夜空中最亮的星",
+      "author": "逃跑计划",
+      "type": "流行",
+      "sheet": "一年",
+      "img": "images/taopao.png",
+      "src": "audio/逃跑计划 - 夜空中最亮的星.mp3",
+      "lyric": ""
+    },
+    {
+      "id": 8,
+      "name": "賭神",
+      "author": "賭神",
+      "type": "流行",
+      "sheet": "又是那一年",
+      "img": "images/s3.png",
+      "src": "audio/賭神 - 卢冠廷.mp3",
+      "lyric": ""
+    },
+    {
+      "id": 9,
+      "name": "薛之谦 - 刚刚好",
+      "author": "薛之谦",
+      "type": "流行",
+      "sheet": "又是那一年",
+      "img": "images/xuezhiqian2.png",
+      "src": "audio/薛之谦 - 刚刚好.mp3",
+      "lyric": ""
+    },
+    {
+      "id": 10,
+      "name": "听说爱情回来过",
+      "author": "张敬轩",
+      "type": "流行",
+      "sheet": "爱情",
+      "img": "images/zhangjinxuan.png",
+      "src": "audio/张敬轩 - 听说爱情回来过(Live).mp3",
+      "lyric": ""
+    }
+  ]
+}

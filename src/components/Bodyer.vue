@@ -83,102 +83,43 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
-      musicLists: [
-        {
-          id: 1,
-          name: '绅士',
-          author: '薛之谦',
-          type: '流行',
-          sheet: '又是那一年',
-          img: require('../assets/images/s3.png'),
-          src: require('../assets/audio/薛之谦 - 绅士.mp3'),
-          lyric: ''
-        },
-        {
-          id: 2,
-          name: '你还要我怎样',
-          author: '薛之谦',
-          type: '流行',
-          sheet: '又是那一年',
-          img: require('../assets/images/s3.png'),
-          src: require('../assets/audio/薛之谦 - 你还要我怎样.mp3'),
-          lyric: ''
-        },
-        {
-          id: 3,
-          name: '薛之谦-演员',
-          author: '薛之谦',
-          type: '流行',
-          sheet: '又是那一年',
-          img: require('../assets/images/s3.png'),
-          src: require('../assets/audio/薛之谦 - 演员.mp3'),
-          lyric: ''
-        },
-        {
-          id: 4,
-          name: '薛之谦-刚刚',
-          author: '薛之谦',
-          type: '流行',
-          sheet: '又是那一年',
-          img: require('../assets/images/s3.png'),
-          src: require('../assets/audio/薛之谦 - 绅士.mp3'),
-          lyric: ''
-        },
-        {
-          id: 5,
-          name: '薛之谦-刚刚',
-          author: '薛之谦',
-          type: '流行',
-          sheet: '又是那一年',
-          img: require('../assets/images/s3.png'),
-          src: require('../assets/audio/薛之谦 - 绅士.mp3'),
-          lyric: ''
-        },
-        {
-          id: 6,
-          name: '薛之谦-刚刚',
-          author: '薛之谦',
-          type: '流行',
-          sheet: '又是那一年',
-          img: require('../assets/images/s3.png'),
-          src: require('../assets/audio/薛之谦 - 绅士.mp3'),
-          lyric: ''
-        },
-        {
-          id: 7,
-          name: '薛之谦-刚刚',
-          author: '薛之谦',
-          type: '流行',
-          sheet: '又是那一年',
-          img: require('../assets/images/s3.png'),
-          src: require('../assets/audio/薛之谦 - 绅士.mp3'),
-          lyric: ''
-        },
-        {
-          id: 8,
-          name: '薛之谦-刚刚',
-          author: '薛之谦',
-          type: '流行',
-          sheet: '又是那一年',
-          img: require('../assets/images/s3.png'),
-          src: require('../assets/audio/薛之谦 - 绅士.mp3'),
-          lyric: ''
-        }
-      ]
+    //   musicLists: []
+      info: {
+        // 'id': 2,
+        // 'name': 'K.D - 晚安-K.D（Cover：颜人中）',
+        // 'author': 'K.D',
+        // 'type': '流行',
+        // 'sheet': '晚安',
+        // 'img': 'images/K.D.png',
+        // 'src': 'audio/K.D - 晚安-K.D（Cover：颜人中）.mp3',
+        // 'lyric': ''
+        'id': 1,
+        'name': '薛之谦-演员',
+        'author': '薛之谦',
+        'type': '伤感',
+        'sheet': '再见大家',
+        'img': 'images/xuezhiqian.png',
+        'src': 'audio/薛之谦 - 演员.mp3',
+        'lyric': ''
+      }
     }
   },
-  // components: {
-  //   Audio
-  // },
+  computed: {
+    ...mapGetters([
+      'musicLists'
+    ])
+  },
   methods: {
     MusicPlay (songId) {
-      console.log('播放歌曲' + songId)
+      // console.log('播放歌曲' + songId)
       // console.log(this.$parent.$parent.musicLists)
-      this.$axios.get('http://jsonplaceholder.typicode.com/users').then(response => {
-        console.log(response.data)
+      this.$axios.get('testMusic.json').then(response => {
+        this.$store.commit('setMusicInfo', this.info)
+        // console.log(response.data)
       }).catch(error => {
         console.log(error)
       })
@@ -292,10 +233,11 @@ export default {
 .icon_play{
   font-size: 22px;
   cursor: pointer;
+  color: #D4D3C7;
 }
 
 .icon_play:hover{
-  color: #D4D3C7;
+  color: rgb(247, 95, 8);
 }
 
 .right_side{
