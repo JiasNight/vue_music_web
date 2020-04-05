@@ -14,6 +14,8 @@ import './assets/css/Iconfont/iconfont.css'
 import VueI18n from 'vue-i18n'
 // 导入axios
 import axios from 'axios'
+// 导入qs
+import qs from 'qs'
 
 Vue.config.productionTip = false
 
@@ -28,6 +30,7 @@ const i18n = new VueI18n({
 })
 
 Vue.prototype.$axios = axios
+Vue.prototype.qs = qs
 
 new Vue({
   router,

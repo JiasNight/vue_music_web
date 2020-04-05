@@ -86,6 +86,7 @@ export default {
   },
   methods: {
     btnLogin () {
+      console.log('this.loginFormData')
       var formData = this.loginFormData
 
       if (formData.secode !== this.checkCode) {
@@ -96,8 +97,32 @@ export default {
         })
         this.createCode()
         this.loginFormData.secode = ''
-        return false
       }
+
+      // qs.stringify()  转换成查询字符串
+      // qs.parse() 转换成json对象
+      this.$axios.post('http://127.0.0.1:8090/login',
+        this.qs.stringify(
+          {
+            username: formData.userName,
+            userpasswd: formData.userPassword
+          }
+        )
+      ).then(res => {
+        if (res.status === 200) {
+          this.$router.push({ path: res.data })
+          console.log('登录成功')
+          console.log(res)
+        }
+      }).catch(err => {
+        this.$message({
+          message: '用户名或密码错误',
+          type: 'warning',
+          center: true
+        })
+        this.$router.push({ path: err.data })
+        console.log(err)
+      })
     },
     createCode () {
       var code = ''

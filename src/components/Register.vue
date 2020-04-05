@@ -44,13 +44,13 @@
                     prefix-icon="iconfont icon-success-fill"
                     v-model="registerFormData.secode"
                     placeholder="输入右方验证码"
-                    @keydown.enter.native="btnLogin"
+                    @keydown.enter.native="btnRegister"
                 ></el-input>
                 <span class="check_code" @click="createCode">{{checkCode}}</span>
                 </el-form-item>
                 <br>
                 <el-form-item class="btns">
-                <el-button class="btn_register" type="primary" @click="btnLogin">注册用户</el-button>
+                <el-button class="btn_register" type="primary" @click="btnRegister">注册用户</el-button>
                 <!-- <el-button type="success">重置</el-button> -->
                 </el-form-item>
             </el-form>
@@ -94,7 +94,7 @@ export default {
       this.checkCode = code // 把code值赋给验证码
       // console.log('code:' + code)
     },
-    btnLogin () {
+    btnRegister () {
       var formData = this.registerFormData
       // console.log(formData)
       if (formData.secode !== this.checkCode) {
@@ -106,6 +106,24 @@ export default {
         this.createCode()
         return false
       }
+
+      this.$axios.post('http://127.0.0.1:8090/register',
+        this.qs.stringify(
+          {
+            username: formData.userName,
+            userpassword: formData.userPassword
+          }
+        )
+      ).then(res => {
+        if (res.status === '200') {
+          alert('注册成功！')
+          this.$router.push({ path: res.data })
+        } else {
+          this.$router.push({ path: '/register' })
+        }
+      }).catch(err => {
+        console.log(err.data)
+      })
     },
     checkPasswd () {
       var formData = this.registerFormData
